@@ -1,4 +1,7 @@
 *.py[cod]
+srv.pid
+*pid
+*pycache*
 
 # C extensions
 *.so
