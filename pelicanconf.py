@@ -6,7 +6,7 @@ AUTHOR = 'Walter'
 SITENAME = '荒野丛林'
 SITEURL = ''
 
-TIMEZONE = 'Asian/Shanghai'
+TIMEZONE = 'Asia/ShangHai'
 
 DEFAULT_LANG = 'zh'
 
