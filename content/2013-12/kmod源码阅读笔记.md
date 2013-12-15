@@ -126,7 +126,7 @@ handle_kmod_commands扫描命令行参数，getopt_long时GNU扩展(man 3 getopt
 	(gdb) macro expand ARRAY_SIZE(kmod_cmds)
 	expands to: (sizeof(kmod_cmds) / sizeof((kmod_cmds)[0]) + ({ _Static_assert((!__builtin_types_compatible_p(typeof(kmod_cmds), typeof(&(kmod_cmds)[0]))), "!__builtin_types_compatible_p(typeof(kmod_cmds), typeof(&(kmod_cmds)[0]))"); 0; }))
 	
-	::c
+	:::c
 	/* Two gcc extensions.
 	* &a[0] degrades to a pointer: a different type from an array */
 	#define _array_size_chk(arr) ({ \

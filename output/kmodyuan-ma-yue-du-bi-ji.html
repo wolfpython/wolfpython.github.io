@@ -183,7 +183,7 @@ lrwxrwxrwx 1 root root 10 10月 18 22:50 /sbin/rmmod -&gt; /sbin/kmod
 <div class="highlight"><pre><span class="o">(</span>gdb<span class="o">)</span> macro expand ARRAY_SIZE<span class="o">(</span>kmod_cmds<span class="o">)</span>
 expands to: <span class="o">(</span>sizeof<span class="o">(</span>kmod_cmds<span class="o">)</span> / sizeof<span class="o">((</span>kmod_cmds<span class="o">)[</span>0<span class="o">])</span> + <span class="o">({</span> _Static_assert<span class="o">((</span>!__builtin_types_compatible_p<span class="o">(</span>typeof<span class="o">(</span>kmod_cmds<span class="o">)</span>, typeof<span class="o">(</span>&amp;<span class="o">(</span>kmod_cmds<span class="o">)[</span>0<span class="o">])))</span>, <span class="s2">&quot;!__builtin_types_compatible_p(typeof(kmod_cmds), typeof(&amp;(kmod_cmds)[0]))&quot;</span><span class="o">)</span>; 0; <span class="o">}))</span>
 
-::c
+:::c
 /* Two gcc extensions.
 * &amp;a<span class="o">[</span>0<span class="o">]</span> degrades to a pointer: a different <span class="nb">type </span>from an array */
 <span class="c">#define _array_size_chk(arr) ({ \</span>
