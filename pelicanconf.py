@@ -28,3 +28,10 @@ DEFAULT_PAGINATION = 10
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 #THEME = "iris"
+#THEME = "waterspill"
+#THEME = "bootstrap2"
+#THEME = "pelican-bootstrap3"
+#THEME = "sundown"
+#THEME = "pelican-mockingbird"
+#THEME =  "plumage"
+THEME =  "gum"
