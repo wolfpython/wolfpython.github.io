@@ -141,7 +141,7 @@ handle_kmod_commands扫描命令行参数，getopt_long时GNU扩展(man 3 getopt
 的代码，无论如何扩展，宏最终的值都时0,所以不会对数组大小有影响。__builtin_types_compatible_p是gcc内置函数[^2],用于检查两个参数的类型是否一致，
 相同，值为1,不同为0。typeof返回参数类型。_Static_assert是GCC扩展，顾名思义就是静态断言，用于编译时断言，对应于C11 static_assert。这段代码的意思
 就是如果数组类型如果和指向数组第一个元素的指针类型不一致，则编译通过，否则编译通不过。啥时候编译通过不了？如果传进去一个指针，而不是数组，则编译不通过。
-GCC内置函数的确很强大，一般来说数组作为参数传递，会退化为指针，而内置函数不会。看一下在不支持静态编译的系统上(编译器),如何实现类似的功能：
+GCC内置函数的确很强大，一般来说数组作为参数传递，会退化为指针，而内置函数不会[^4]。看一下在不支持静态编译的系统上(编译器),如何实现类似的功能：
 
 	:::c
 	#if defined(HAVE_STATIC_ASSERT)
@@ -171,3 +171,4 @@ GCC内置函数的确很强大，一般来说数组作为参数传递，会退�
 [^1]:<https://www.kernel.org/pub/linux/utils/kernel/kmod/>
 [^2]:<http://gcc.gnu.org/onlinedocs/gcc-3.3.6/gcc/Other-Builtins.html>
 [^3]:<http://www.open-std.org/jtc1/sc22/WG14/www/docs/n1256.pdf>
+[^4]:之前对于GCC内置函数的理解有误。内置函数某种意义上并不是函数。
