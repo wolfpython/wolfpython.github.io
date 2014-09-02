@@ -34,4 +34,5 @@ DEFAULT_PAGINATION = 10
 #THEME = "sundown"
 #THEME = "pelican-mockingbird"
 #THEME =  "plumage"
-THEME =  "gum"
+#THEME =  "gum"
+THEME =  "sundown"
