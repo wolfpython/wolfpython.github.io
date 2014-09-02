@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>gdb调试技巧笔记 KenIngle.com</title>
+
+    <link rel="stylesheet" href="/theme/css/main.css">
+    <link rel="stylesheet" href="/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="/">荒野丛林 </a></div>
+        <div class="sub-title"></div>
+
+<p>
+  <div class="view"><a href="/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        gdb调试技巧笔记
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2013-12-15T00:00:00">
+  日 15 十二月 2013
+</abbr> | 
+ -- (<a href="/gdbdiao-shi-ji-qiao-bi-ji.html" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>GDB最基本的几条调试命令不需要再记录。记录些稍微高级点的特性。</p>
+<div class="highlight"><pre><span class="mf">1.</span> <span class="err">调试带参数的程序</span>
+</pre></div>
+
+
+<p>在使用gdb调试带参数的程序时，可以使用--args选项。</p>
+<div class="highlight"><pre><span class="mf">2.</span> <span class="n">GDB</span><span class="err">调试宏。</span><span class="n">C</span><span class="err">代码在预处理后，宏会被替换，导致在调试最终的可执行文件时，无法找到宏定义。</span>
+</pre></div>
+
+
+<p>gdb编译时，打开-g开关，可以生成调试信息。其实，-g也是有级别(level)的。-g1包含非常少的
+调试信息，包含函数及外部变量信息，但是没有行号及局部变量信息。-g2为默认级别，包含行号等
+信息。-g3包含更多的信息，比如程序中出现的宏定义信息。macro expand命令和扩展宏，对于调试宏
+非常有帮助。可是使用print显示宏替换过后的值，如果宏里面包含有编译时语句，则无法显示出值，比如
+宏定义中有static_assert(C11特性,GNU扩展为_Static_assert）。</p>
+<div class="highlight"><pre><span class="n">localhost</span> <span class="n">tools</span> <span class="err">#</span> <span class="n">gdb</span> <span class="o">--</span><span class="n">args</span> <span class="p">.</span><span class="o">/</span><span class="n">kmod</span> <span class="o">-</span><span class="n">V</span>
+<span class="n">GNU</span> <span class="n">gdb</span> <span class="p">(</span><span class="n">Gentoo</span> <span class="mf">7.6.2</span> <span class="n">p1</span><span class="p">)</span> <span class="mf">7.6.2</span>
+<span class="n">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">2013</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">Inc</span><span class="p">.</span>
+<span class="n">License</span> <span class="n">GPLv3</span><span class="o">+:</span> <span class="n">GNU</span> <span class="n">GPL</span> <span class="n">version</span> <span class="mi">3</span> <span class="n">or</span> <span class="n">later</span> <span class="o">&lt;</span><span class="n">http</span><span class="o">:</span><span class="c1">//gnu.org/licenses/gpl.html&gt;</span>
+<span class="n">This</span> <span class="n">is</span> <span class="n">free</span> <span class="n">software</span><span class="o">:</span> <span class="n">you</span> <span class="n">are</span> <span class="n">free</span> <span class="n">to</span> <span class="n">change</span> <span class="n">and</span> <span class="n">redistribute</span> <span class="n">it</span><span class="p">.</span>
+<span class="n">There</span> <span class="n">is</span> <span class="n">NO</span> <span class="n">WARRANTY</span><span class="p">,</span> <span class="n">to</span> <span class="n">the</span> <span class="n">extent</span> <span class="n">permitted</span> <span class="n">by</span> <span class="n">law</span><span class="p">.</span>  <span class="n">Type</span> <span class="s">&quot;show copying&quot;</span>
+<span class="n">and</span> <span class="s">&quot;show warranty&quot;</span> <span class="k">for</span> <span class="n">details</span><span class="p">.</span>
+<span class="n">This</span> <span class="n">GDB</span> <span class="n">was</span> <span class="n">configured</span> <span class="n">as</span> <span class="s">&quot;x86_64-pc-linux-gnu&quot;</span><span class="p">.</span>
+<span class="n">For</span> <span class="n">bug</span> <span class="n">reporting</span> <span class="n">instructions</span><span class="p">,</span> <span class="n">please</span> <span class="n">see</span><span class="o">:</span>
+<span class="o">&lt;</span><span class="n">http</span><span class="o">:</span><span class="c1">//bugs.gentoo.org/&gt;...</span>
+<span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">wolf</span><span class="o">/</span><span class="n">sourcecode</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">kmod</span><span class="o">-</span><span class="mi">15</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">kmod</span><span class="p">...</span><span class="n">done</span><span class="p">.</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">list</span>
+<span class="mi">154</span>     <span class="p">}</span>
+<span class="mi">155</span> 
+<span class="mi">156</span>     <span class="k">return</span> <span class="o">-</span><span class="n">ENOENT</span><span class="p">;</span>
+<span class="mi">157</span> <span class="p">}</span>
+<span class="mi">158</span> 
+<span class="mi">159</span> <span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="mi">160</span> <span class="p">{</span>
+<span class="mi">161</span>     <span class="kt">int</span> <span class="n">err</span><span class="p">;</span>
+<span class="mi">162</span> 
+<span class="mi">163</span>     <span class="nf">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">program_invocation_short_name</span><span class="p">,</span> <span class="s">&quot;kmod&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">b</span> <span class="mi">163</span>
+<span class="n">Breakpoint</span> <span class="mi">1</span> <span class="n">at</span> <span class="mh">0x4028a6</span><span class="o">:</span> <span class="n">file</span> <span class="n">tools</span><span class="o">/</span><span class="n">kmod</span><span class="p">.</span><span class="n">c</span><span class="p">,</span> <span class="n">line</span> <span class="mf">163.</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">next</span>
+<span class="n">The</span> <span class="n">program</span> <span class="n">is</span> <span class="n">not</span> <span class="n">being</span> <span class="n">run</span><span class="p">.</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">wolf</span><span class="o">/</span><span class="n">sourcecode</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">kmod</span><span class="o">-</span><span class="mi">15</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="p">.</span><span class="o">/</span><span class="n">kmod</span> <span class="o">-</span><span class="n">V</span>
+<span class="nl">warning:</span> <span class="n">Could</span> <span class="n">not</span> <span class="n">load</span> <span class="n">shared</span> <span class="n">library</span> <span class="n">symbols</span> <span class="k">for</span> <span class="n">linux</span><span class="o">-</span><span class="n">vdso</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span><span class="p">.</span>
+<span class="n">Do</span> <span class="n">you</span> <span class="n">need</span> <span class="s">&quot;set solib-search-path&quot;</span> <span class="n">or</span> <span class="s">&quot;set sysroot&quot;</span><span class="o">?</span>
+
+<span class="n">Breakpoint</span> <span class="mi">1</span><span class="p">,</span> <span class="n">main</span> <span class="p">(</span><span class="n">argc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">argv</span><span class="o">=</span><span class="mh">0x7fffffffe0b8</span><span class="p">)</span> <span class="n">at</span> <span class="n">tools</span><span class="o">/</span><span class="n">kmod</span><span class="p">.</span><span class="n">c</span><span class="o">:</span><span class="mi">163</span>
+<span class="mi">163</span>     <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">program_invocation_short_name</span><span class="p">,</span> <span class="s">&quot;kmod&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+<span class="mi">164</span>         <span class="n">err</span> <span class="o">=</span> <span class="n">handle_kmod_commands</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">st</span>
+<span class="n">Ambiguous</span> <span class="n">command</span> <span class="s">&quot;st&quot;</span><span class="o">:</span> <span class="n">stack</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">stepi</span><span class="p">,</span> <span class="n">stepping</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">strace</span><span class="p">.</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+<span class="n">handle_kmod_commands</span> <span class="p">(</span><span class="n">argc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">argv</span><span class="o">=</span><span class="mh">0x7fffffffe0b8</span><span class="p">)</span> <span class="n">at</span> <span class="n">tools</span><span class="o">/</span><span class="n">kmod</span><span class="p">.</span><span class="n">c</span><span class="o">:</span><span class="mi">92</span>
+<span class="mi">92</span>      <span class="kt">int</span> <span class="n">err</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+<span class="mi">98</span>          <span class="n">c</span> <span class="o">=</span> <span class="n">getopt_long</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">options_s</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">macro</span> <span class="n">expand</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">kmod_cmds</span><span class="p">)</span>
+<span class="n">expands</span> <span class="n">to</span><span class="o">:</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">kmod_cmds</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">((</span><span class="n">kmod_cmds</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="p">({</span> <span class="n">_Static_assert</span><span class="p">((</span><span class="o">!</span><span class="n">__builtin_types_compatible_p</span><span class="p">(</span><span class="n">typeof</span><span class="p">(</span><span class="n">kmod_cmds</span><span class="p">),</span> <span class="n">typeof</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">kmod_cmds</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))),</span> <span class="s">&quot;!__builtin_types_compatible_p(typeof(kmod_cmds), typeof(&amp;(kmod_cmds)[0]))&quot;</span><span class="p">);</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}))</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">help</span> <span class="n">macro</span>
+<span class="n">Prefix</span> <span class="k">for</span> <span class="n">commands</span> <span class="n">dealing</span> <span class="n">with</span> <span class="n">C</span> <span class="n">preprocessor</span> <span class="n">macros</span><span class="p">.</span>
+
+<span class="n">List</span> <span class="n">of</span> <span class="n">macro</span> <span class="n">subcommands</span><span class="o">:</span>
+
+<span class="n">macro</span> <span class="n">define</span> <span class="o">--</span> <span class="n">Define</span> <span class="n">a</span> <span class="n">new</span> <span class="n">C</span><span class="o">/</span><span class="n">C</span><span class="o">++</span> <span class="n">preprocessor</span> <span class="n">macro</span>
+<span class="n">macro</span> <span class="n">expand</span> <span class="o">--</span> <span class="n">Fully</span> <span class="n">expand</span> <span class="n">any</span> <span class="n">C</span><span class="o">/</span><span class="n">C</span><span class="o">++</span> <span class="n">preprocessor</span> <span class="n">macro</span> <span class="n">invocations</span> <span class="n">in</span> <span class="n">EXPRESSION</span>
+<span class="n">macro</span> <span class="n">expand</span><span class="o">-</span><span class="n">once</span> <span class="o">--</span> <span class="n">Expand</span> <span class="n">C</span><span class="o">/</span><span class="n">C</span><span class="o">++</span> <span class="n">preprocessor</span> <span class="n">macro</span> <span class="n">invocations</span> <span class="n">appearing</span> <span class="n">directly</span> <span class="n">in</span> <span class="n">EXPRESSION</span>
+<span class="n">macro</span> <span class="n">list</span> <span class="o">--</span> <span class="n">List</span> <span class="n">all</span> <span class="n">the</span> <span class="n">macros</span> <span class="n">defined</span> <span class="n">using</span> <span class="n">the</span> <span class="err">`</span><span class="n">macro</span> <span class="n">define</span><span class="err">&#39;</span> <span class="n">command</span>
+<span class="n">macro</span> <span class="n">undef</span> <span class="o">--</span> <span class="n">Remove</span> <span class="n">the</span> <span class="n">definition</span> <span class="n">of</span> <span class="n">the</span> <span class="n">C</span><span class="o">/</span><span class="n">C</span><span class="o">++</span> <span class="n">preprocessor</span> <span class="n">macro</span> <span class="n">with</span> <span class="n">the</span> <span class="n">given</span> <span class="n">name</span>
+
+<span class="n">Type</span> <span class="s">&quot;help macro&quot;</span> <span class="n">followed</span> <span class="n">by</span> <span class="n">macro</span> <span class="n">subcommand</span> <span class="n">name</span> <span class="k">for</span> <span class="n">full</span> <span class="n">documentation</span><span class="p">.</span>
+<span class="n">Type</span> <span class="s">&quot;apropos word&quot;</span> <span class="n">to</span> <span class="n">search</span> <span class="k">for</span> <span class="n">commands</span> <span class="n">related</span> <span class="n">to</span> <span class="s">&quot;word&quot;</span><span class="p">.</span>
+<span class="n">Command</span> <span class="n">name</span> <span class="n">abbreviations</span> <span class="n">are</span> <span class="n">allowed</span> <span class="k">if</span> <span class="n">unambiguous</span><span class="p">.</span>
+</pre></div>
+
+
+<p>还可以使用info macros查看程序定义的所有宏。</p>
+<div class="highlight"><pre><span class="mf">3.</span><span class="err">设置</span><span class="n">gdb</span><span class="err">命令的输出。</span>
+</pre></div>
+
+
+<p>有时gdb命令的输出太长，在终端下滚屏都嫌太长。可以使用日志功能。</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">set</span> <span class="n">logging</span> <span class="n">file</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">txt</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">set</span> <span class="n">logging</span> <span class="n">on</span>
+<span class="n">Copying</span> <span class="n">output</span> <span class="n">to</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">txt</span><span class="p">.</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">set</span> <span class="n">logging</span> <span class="n">off</span>
+<span class="n">Done</span> <span class="n">logging</span> <span class="n">to</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">txt</span><span class="p">.</span>
+</pre></div>
+
+
+<p>链接文档:</p>
+<p>1.<a href="http://www.ibm.com/developerworks/cn/aix/library/au-gdb.html">http://www.ibm.com/developerworks/cn/aix/library/au-gdb.html</a></p>
+    </div><!-- /.entry-content -->
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; 荒野丛林 &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

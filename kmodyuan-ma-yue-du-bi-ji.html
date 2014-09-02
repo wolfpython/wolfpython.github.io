@@ -1,47 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>kmod源码阅读笔记 KenIngle.com</title>
+<head>
 
-    <link rel="stylesheet" href="/theme/css/main.css">
-    <link rel="stylesheet" href="/theme/css/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <div><img src="" class="grv-img"/></div>
-        <div class="title"><a href="/">荒野丛林 </a></div>
-        <div class="sub-title"></div>
+        <title>kmod源码阅读笔记</title>
+        <meta charset="utf-8" />
 
-<p>
-  <div class="view"><a href="/archives.html">Archives</a></div>
-</p>
 
-<!-- Social links -->
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
 
-      </header>
-      <section>
+        <link rel="stylesheet" type="text/css" href="/theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="/theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="/theme/pygment.css" />
+
+        <script src="/theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="">荒野丛林 <strong></strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="">Home</a></li>
+
+
+              </ul>
+            </div>
+
 <section id="content" class="body">
-  <article>
-      <div class="article-title">
-        kmod源码阅读笔记
-      </div>
 
-    <div class="entry-content">
-<p>
-<small>
-<abbr class="published" title="2013-12-14T00:00:00">
-  六 14 十二月 2013
-</abbr> | 
- -- (<a href="/kmodyuan-ma-yue-du-bi-ji.html" rel="bookmark">permalink</a>)
-</small>
-</p>      <p>kmod<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup>是处理Linux内核模块的一系列工具集,可以插入，删除，显示，检查属性，解决模块依赖和创建别名。
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="/kmodyuan-ma-yue-du-bi-ji.html" rel="bookmark"
+                   title="Permalink to kmod源码阅读笔记">kmod源码阅读笔记</a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <abbr class="published" title="2013-12-14T00:00:00">
+                六 14 十二月 2013
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="/author/walter.html">Walter</a>
+              </address>
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <p>kmod<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup>是处理Linux内核模块的一系列工具集,可以插入，删除，显示，检查属性，解决模块依赖和创建别名。
 取代了module-init-tools。</p>
 <h1>程序起始及命令行参数处理</h1>
 <p>首先看main函数:</p>
@@ -209,36 +232,72 @@ GCC内置函数的确很强大，一般来说数组作为参数传递，会退�
 </li>
 </ol>
 </div>
-    </div><!-- /.entry-content -->
-  </article>
-</section>
-      </section>
-      <footer>
-        <p><small>&copy; 荒野丛林 &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <!-- Scale fix -->
-    <script>
-      var metas = document.getElementsByTagName('meta');
-      var i;
-      
-      if (navigator.userAgent.match(/iPhone/i)) {
-        for (i=0; i<metas.length; i++) {
-          if (metas[i].name == "viewport") {
-            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
-          }
-        }
-      
-        document.addEventListener("gesturestart", gestureStart, false);
-      }
+            </div><!-- /.entry-content -->
 
-      function gestureStart() {
-        for (i=0; i<metas.length; i++) {
-          if (metas[i].name == "viewport") {
-            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
-          }
-        }
-      }
-    </script>
-  </body>
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns">
+
+<h4>Pages</h4>
+
+ <ul>
+  </ul>
+
+<h4>Categories</h4>
+<ul>
+		<li><a href="/category/2013-12.html">2013-12</a></li>
+		<li><a href="/category/misc.html">misc</a></li>
+</ul>
+
+
+<h4>Tags</h4>
+
+
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+
+                   <address id="about" class="vcard body">
+                    Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+                    which takes great advantage of <a href="http://python.org">Python</a>.
+                    <br />
+                    Based on the <a target="_blank" href="http://gumbyframework.com">Gumby Framework</a>
+                    </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+
+
+
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+  <script src="/theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="/theme/js/libs/gumby.min.js"></script>
+  <script src="/theme/js/plugins.js"></script>
+
+</body>
 </html>
