@@ -1,0 +1,37 @@
+#+TITLE:  Qt5 UI文件使用
+#+OPTIONS: ^:nil
+
+* 使用Designer绘制ui
+
+可以绘制基于QDialog,QMainWindow和QWidget的图形。
+
+* ui文件的使用方法
+
+** 在编译时使用
+*** ui文件的原理
+ui文件会被编译为ui_xxx.h头文件，头文件里定义了一个纯C++类，不继承自任何Qt类和Ui命名空间。
+生成头文件的命令类似于，摘自官方的calculatorform例子:
+#+BEGIN_SRC sh
+/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../calculatorform/calculatorform.ui \
+-o ui_calculatorform.h
+#+END_SRC
+
+可以有如下几种方式
+1. 直接方式
+1. 单继承方式
+1. 双继承方式
+*** 直接方式
+直接继承的缺点是，不好实现信号槽
+*** 单继承方式
+单继承时，可以在类型里定义ui_xxx类的变量或者指针
+*** 双继承方式
+
+双继承同时拥有Qt部件和ui_xxx的全部变量
+** 在运行时动态加载
+使用UiTools来动态加载构建图形部件。可以使用findChild，根据部件名称来获取对应部件的指针。
+
+* signal-slot自动关联
+slot需要定义成如下形式,在编译时使用时，在setupUi会自动生成QMetaObject的自动关联代码，
+在使用动态加载的方法时，需要手动添加。
+on_<object_name>_<signal_name>(<signal parameters>);
+   
