@@ -1,0 +1,50 @@
+#+TITLE: CuteMarkEd markdown编辑器实现（一）
+
+* 界面
+
+** 主界面
+通过主界面文件mainwindow.ui,可以看到主界面由文件浏览界面，markdown编辑器部件，HTML preview(source view)，目录结构部件及
+及markdown语法帮助部件组成，其中，
+
++ 文件浏览界面，目录结构部件及markdown 语法帮助部件都是docWidget，可以移动隐藏的
++ Html preview和source view是个tabWdiget,只可以同时显示一个，通过点击状态栏实现切换。
++ markdown编辑器继承自QPlainTextEdit,编辑器的功能比较简洁（弱）。
++ 实现了常见的菜单，比如文件，编辑，查看，其他额外功能菜单和帮助菜单。文件菜单里，缺少一个最近打开
+  文件的菜单，后面可以看到是通过代码加进去的。
++ 通过比对，CuteMarkEd最终运行的主界面，可以发现还有显示行号，自动补全，markdown语法高亮等功能
+后面继续分析代码实现。
+
++ markdown editor的textChanged信号连接到了MainWindow的plainTextChanged槽。
+
+*主界面代码实现
+
+** mainwindow的构造函数
+
++ 首先调用ui->setupUi构建ui文件生成的部件
++ 调用MainWindow的成员函数setupUi连接MainWindow内部件之间的信号槽,设置菜单栏Action的快捷键
+，设置状态栏，设置各docWdiget的初始显示状态,读取配置
++ 最后根据配置初始化程序
+
+** plainTextChanged槽
+
+plainTextChanged槽在editor的textChanged信号被触发后被调用，先来看看它的大致实现。
+
++ 获取editor的内容
++ 设置统计单词标签
++ 调用html生成器(generator)的markdownTextChanged成员函数,生成HTML。（后面继续分析)
++ 设置文档被修改
+
+** 显示html文档
+
+generator生成完html后，会发送htmlResultReady的信号，调用MainWindow的htmlResultReady
+槽，设置html文档现实在webveiw和htmlSourceTextEdit中。
+
+
+以上就是markdown editor最简单的结构流程，后续继续分析其他功能，比如editor的语法高亮，generator
+生成Html的过程，editor的单词自动补全，html的语法高亮，editor和webview之间的位置同步等。
+
+
+
+
+
+
