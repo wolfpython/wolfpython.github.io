@@ -1,0 +1,37 @@
+#+TITLE: CuteMarkEd HTML生成器实现
+
+
+* HtmlPreviewGenerator类实现
+
+HtmlPreviewGenerator继承自QThread类，重新实现了run成员函数。在MainWindow初始化时，调用了
+generator的start成员函数，自此生成HTML的动作在新线程里完成。根据配置选用不同的markdown编译器。
+成员:
++ tasks 是一个QString队列，用于存储editor送过来的文本
++ tasksMutex 是一个QMutex互斥量，用于保护对tasks的访问
++ bufferNotEmpty 是QWaitCondition对象，用于在队列为空时，阻塞，队列有数据时，唤醒线程。
+
+** run函数
+
+
+run函数本身是个死循环。
++ 首先通过通过QMutexLocker对taskMutex加锁，QMutexLocker的实现遵循了RAII，在函数推出时，
+自动释放锁。
++ 如果tasks为空，则调用bufferNotEmpty的wait成员函数，线程阻塞，同时释放taskMutex。
++ 如果tasks不为空，则文本出队。
++ 如果对列为空，删除原来的文本，重新生成文本（document)
++ 根据生成的文本，生成Html和TOC(目录)
+
+** 生成文本队列
+
+根据之前阅读代码，在editor的textChanged信号发出后，MainWindow的plainTextChanged被调用
+，这个SLOT调用了generator的markdownTextChanged成员函数。这个函数首先对tasksMutex加锁，
+然后把文本入对，唤醒阻塞的线程。
+
+* converter类的实现
+以DiscountMarkdownConverter为例：
+构造函数什么也没做，实现了继承自MarkdownConverter的虚函数createDocument,此函数返回一个
+DiscountMarkdownDocument对象。DiscountMarkdownDocument的实现也遵循RAII，在析构函数中
+mkd_cleanup生成的文本。DiscountmarkdownDoucument继承自MarkdownDocument,其中
+MarkdownDocument的析构函数为虚函数，在销毁MarkdownDocument（delete document)的时候，会
+调用子类的析构函数。
+
