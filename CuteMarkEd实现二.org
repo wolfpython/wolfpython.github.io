@@ -35,3 +35,10 @@ mkd_cleanup生成的文本。DiscountmarkdownDoucument继承自MarkdownDocument,
 MarkdownDocument的析构函数为虚函数，在销毁MarkdownDocument（delete document)的时候，会
 调用子类的析构函数。
 
+generator的generateHtmlFromMarkdown成员函数根据mkd_compile返回的document,生成html
+字符串，这个字符串其实只包含html的body，并不包含最终的html头部。
+
+HtmlTemplate的renderAsHtml最终把用到的js及css和html头全部汇合到一起。生成完完整的html后，
+发送htmlResultReady信号。这个信号由MainWindow接着，开始设置webView和htmlSourceTextEdit
+，显示出来。
+
