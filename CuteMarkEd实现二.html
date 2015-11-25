@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>CuteMarkEd HTML生成器实现</title>
-<!-- 2015-11-21 六 22:08 -->
+<!-- 2015-11-25 三 19:41 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="walter" />
@@ -222,12 +222,23 @@ mkd<sub>cleanup生成的文本。DiscountmarkdownDoucument继承自MarkdownDocum
 MarkdownDocument的析构函数为虚函数，在销毁MarkdownDocument（delete document)的时候，会
 调用子类的析构函数。
 </p>
+
+<p>
+generator的generateHtmlFromMarkdown成员函数根据mkd<sub>compile返回的document</sub>,生成html
+字符串，这个字符串其实只包含html的body，并不包含最终的html头部。
+</p>
+
+<p>
+HtmlTemplate的renderAsHtml最终把用到的js及css和html头全部汇合到一起。生成完完整的html后，
+发送htmlResultReady信号。这个信号由MainWindow接着，开始设置webView和htmlSourceTextEdit
+，显示出来。
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: walter</p>
-<p class="date">Created: 2015-11-21 六 22:08</p>
+<p class="date">Created: 2015-11-25 三 19:41</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
